@@ -1,4 +1,4 @@
-const Certification = require("../models/Certification");
-const crudFactory = require("./crudFactory");
+import Certification from "../models/Certification.js";
+import crudFactory from "./crudFactory.js";
 
-module.exports = crudFactory(Certification, { sortBy: "order -issueDate" });
+export default crudFactory(Certification, { sortBy: "order -issueDate" });

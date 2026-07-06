@@ -1,20 +1,20 @@
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
-const rateLimit = require("express-rate-limit");
-const connectDB = require("./config/db");
-const { notFound, errorHandler } = require("./middleware/errorMiddleware");
+import "dotenv/config";
+import express from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import rateLimit from "express-rate-limit";
+import connectDB from "./config/db.js";
+import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
-const authRoutes = require("./routes/authRoutes");
-const projectRoutes = require("./routes/projectRoutes");
-const experienceRoutes = require("./routes/experienceRoutes");
-const skillRoutes = require("./routes/skillRoutes");
-const testimonialRoutes = require("./routes/testimonialRoutes");
-const achievementRoutes = require("./routes/achievementRoutes");
-const certificationRoutes = require("./routes/certificationRoutes");
-const messageRoutes = require("./routes/messageRoutes");
-const statsRoutes = require("./routes/statsRoutes");
+import authRoutes from "./routes/authRoutes.js";
+import projectRoutes from "./routes/projectRoutes.js";
+import experienceRoutes from "./routes/experienceRoutes.js";
+import skillRoutes from "./routes/skillRoutes.js";
+import testimonialRoutes from "./routes/testimonialRoutes.js";
+import achievementRoutes from "./routes/achievementRoutes.js";
+import certificationRoutes from "./routes/certificationRoutes.js";
+import messageRoutes from "./routes/messageRoutes.js";
+import statsRoutes from "./routes/statsRoutes.js";
 
 connectDB();
 
@@ -34,6 +34,16 @@ app.use(cookieParser());
 const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 300 });
 app.use("/api", limiter);
 
+// Root route — fixes "Route not found: /" when someone hits the bare API URL
+// (e.g. Vercel deployment root, uptime checks, or just visiting the base URL in a browser).
+app.get("/", (req, res) => {
+  res.json({
+    status: "ok",
+    message: "Portfolio API is running",
+    health: "/api/health",
+  });
+});
+
 app.get("/api/health", (req, res) => res.json({ status: "ok", uptime: process.uptime() }));
 
 app.use("/api/auth", authRoutes);
@@ -49,5 +59,11 @@ app.use("/api/stats", statsRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// When deployed on Vercel, the platform imports this file as a serverless handler
+// and calling app.listen() is unnecessary (and harmless to skip).
+if (!process.env.VERCEL) {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
+
+export default app;

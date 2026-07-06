@@ -1,17 +1,17 @@
 // Seeds the database with an admin user and Shailesh's real portfolio content.
 // Run with: npm run seed
-require("dotenv").config();
-const mongoose = require("mongoose");
-const connectDB = require("./config/db");
+import "dotenv/config";
+import mongoose from "mongoose";
+import connectDB from "./config/db.js";
 
-const User = require("./models/User");
-const Project = require("./models/Project");
-const Experience = require("./models/Experience");
-const Skill = require("./models/Skill");
-const Testimonial = require("./models/Testimonial");
-const Achievement = require("./models/Achievement");
-const Certification = require("./models/Certification");
-const Stat = require("./models/Stat");
+import User from "./models/User.js";
+import Project from "./models/Project.js";
+import Experience from "./models/Experience.js";
+import Skill from "./models/Skill.js";
+import Testimonial from "./models/Testimonial.js";
+import Achievement from "./models/Achievement.js";
+import Certification from "./models/Certification.js";
+import Stat from "./models/Stat.js";
 
 const seed = async () => {
   await connectDB();

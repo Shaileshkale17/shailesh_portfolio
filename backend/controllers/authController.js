@@ -1,11 +1,11 @@
-const asyncHandler = require("../utils/asyncHandler");
-const generateToken = require("../utils/generateToken");
-const User = require("../models/User");
+import asyncHandler from "../utils/asyncHandler.js";
+import generateToken from "../utils/generateToken.js";
+import User from "../models/User.js";
 
 // @desc    Login admin/editor user
 // @route   POST /api/auth/login
 // @access  Public
-const login = asyncHandler(async (req, res) => {
+export const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -33,14 +33,14 @@ const login = asyncHandler(async (req, res) => {
 // @desc    Get current logged-in user
 // @route   GET /api/auth/me
 // @access  Private
-const getMe = asyncHandler(async (req, res) => {
+export const getMe = asyncHandler(async (req, res) => {
   res.json(req.user);
 });
 
 // @desc    Register a new admin/editor user (locked down: only use to seed the first admin)
 // @route   POST /api/auth/register
 // @access  Public (should be disabled or protected in production after first admin exists)
-const register = asyncHandler(async (req, res) => {
+export const register = asyncHandler(async (req, res) => {
   const { name, email, password, role } = req.body;
 
   const existing = await User.findOne({ email });
@@ -60,5 +60,3 @@ const register = asyncHandler(async (req, res) => {
     token,
   });
 });
-
-module.exports = { login, getMe, register };

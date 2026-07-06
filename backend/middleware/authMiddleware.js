@@ -1,9 +1,9 @@
-const jwt = require("jsonwebtoken");
-const asyncHandler = require("../utils/asyncHandler");
-const User = require("../models/User");
+import jwt from "jsonwebtoken";
+import asyncHandler from "../utils/asyncHandler.js";
+import User from "../models/User.js";
 
 // Verifies the JWT (from Authorization header or httpOnly cookie) and attaches req.user
-const protect = asyncHandler(async (req, res, next) => {
+export const protect = asyncHandler(async (req, res, next) => {
   let token;
 
   if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
@@ -31,8 +31,8 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
-// Restricts a route to specific roles, e.g. admin(["admin"])
-const authorize = (...roles) => {
+// Restricts a route to specific roles, e.g. authorize("admin")
+export const authorize = (...roles) => {
   return (req, res, next) => {
     if (!req.user || !roles.includes(req.user.role)) {
       res.status(403);
@@ -41,5 +41,3 @@ const authorize = (...roles) => {
     next();
   };
 };
-
-module.exports = { protect, authorize };

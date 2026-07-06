@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Backend API for Shailesh Kale's MERN portfolio + admin dashboard",
   "main": "index.js",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",

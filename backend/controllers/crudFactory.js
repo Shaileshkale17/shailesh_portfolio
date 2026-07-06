@@ -1,4 +1,4 @@
-const asyncHandler = require("../utils/asyncHandler");
+import asyncHandler from "../utils/asyncHandler.js";
 
 // Builds standard REST handlers (getAll, getOne, create, update, remove) for a given Mongoose model.
 // `publicFilter` lets public GET routes hide unpublished/non-featured content while admin routes see everything.
@@ -50,4 +50,4 @@ const crudFactory = (Model, options = {}) => {
   return { getAll, getOne, create, update, remove };
 };
 
-module.exports = crudFactory;
+export default crudFactory;

@@ -1,4 +1,4 @@
-const Experience = require("../models/Experience");
-const crudFactory = require("./crudFactory");
+import Experience from "../models/Experience.js";
+import crudFactory from "./crudFactory.js";
 
-module.exports = crudFactory(Experience, { sortBy: "order -startDate" });
+export default crudFactory(Experience, { sortBy: "order -startDate" });

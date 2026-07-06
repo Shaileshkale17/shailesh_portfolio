@@ -1,4 +1,4 @@
-const Testimonial = require("../models/Testimonial");
-const crudFactory = require("./crudFactory");
+import Testimonial from "../models/Testimonial.js";
+import crudFactory from "./crudFactory.js";
 
-module.exports = crudFactory(Testimonial, { publicFilter: { published: true }, sortBy: "order createdAt" });
+export default crudFactory(Testimonial, { publicFilter: { published: true }, sortBy: "order createdAt" });

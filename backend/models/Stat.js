@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 // Impact-snapshot counters (e.g. "35% technical debt removed")
 const statSchema = new mongoose.Schema(
@@ -11,4 +11,4 @@ const statSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Stat", statSchema);
+export default mongoose.model("Stat", statSchema);

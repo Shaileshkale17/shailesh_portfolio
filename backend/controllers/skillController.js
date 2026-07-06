@@ -1,4 +1,4 @@
-const Skill = require("../models/Skill");
-const crudFactory = require("./crudFactory");
+import Skill from "../models/Skill.js";
+import crudFactory from "./crudFactory.js";
 
-module.exports = crudFactory(Skill, { sortBy: "category order" });
+export default crudFactory(Skill, { sortBy: "category order" });

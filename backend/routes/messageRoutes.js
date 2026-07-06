@@ -1,6 +1,6 @@
-const express = require("express");
-const { protect, authorize } = require("../middleware/authMiddleware");
-const { createMessage, getMessages, updateMessage, deleteMessage } = require("../controllers/messageController");
+import express from "express";
+import { protect, authorize } from "../middleware/authMiddleware.js";
+import { createMessage, getMessages, updateMessage, deleteMessage } from "../controllers/messageController.js";
 
 const router = express.Router();
 
@@ -9,4 +9,4 @@ router.get("/", protect, authorize("admin", "editor"), getMessages);
 router.patch("/:id", protect, authorize("admin", "editor"), updateMessage);
 router.delete("/:id", protect, authorize("admin", "editor"), deleteMessage);
 
-module.exports = router;
+export default router;

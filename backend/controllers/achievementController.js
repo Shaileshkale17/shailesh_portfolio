@@ -1,4 +1,4 @@
-const Achievement = require("../models/Achievement");
-const crudFactory = require("./crudFactory");
+import Achievement from "../models/Achievement.js";
+import crudFactory from "./crudFactory.js";
 
-module.exports = crudFactory(Achievement, { sortBy: "order -date" });
+export default crudFactory(Achievement, { sortBy: "order -date" });

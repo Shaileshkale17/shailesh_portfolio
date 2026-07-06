@@ -1,10 +1,10 @@
-const asyncHandler = require("../utils/asyncHandler");
-const Message = require("../models/Message");
+import asyncHandler from "../utils/asyncHandler.js";
+import Message from "../models/Message.js";
 
 // @desc    Submit a contact-form message
 // @route   POST /api/messages
 // @access  Public
-const createMessage = asyncHandler(async (req, res) => {
+export const createMessage = asyncHandler(async (req, res) => {
   const { name, email, message } = req.body;
   if (!name || !email || !message) {
     res.status(400);
@@ -17,7 +17,7 @@ const createMessage = asyncHandler(async (req, res) => {
 // @desc    List all messages (admin inbox)
 // @route   GET /api/messages
 // @access  Private
-const getMessages = asyncHandler(async (req, res) => {
+export const getMessages = asyncHandler(async (req, res) => {
   const docs = await Message.find().sort("-createdAt");
   res.json(docs);
 });
@@ -25,7 +25,7 @@ const getMessages = asyncHandler(async (req, res) => {
 // @desc    Mark a message read/unread
 // @route   PATCH /api/messages/:id
 // @access  Private
-const updateMessage = asyncHandler(async (req, res) => {
+export const updateMessage = asyncHandler(async (req, res) => {
   const doc = await Message.findByIdAndUpdate(req.params.id, req.body, { new: true });
   if (!doc) {
     res.status(404);
@@ -37,7 +37,7 @@ const updateMessage = asyncHandler(async (req, res) => {
 // @desc    Delete a message
 // @route   DELETE /api/messages/:id
 // @access  Private
-const deleteMessage = asyncHandler(async (req, res) => {
+export const deleteMessage = asyncHandler(async (req, res) => {
   const doc = await Message.findByIdAndDelete(req.params.id);
   if (!doc) {
     res.status(404);
@@ -45,5 +45,3 @@ const deleteMessage = asyncHandler(async (req, res) => {
   }
   res.json({ message: "Message removed", id: req.params.id });
 });
-
-module.exports = { createMessage, getMessages, updateMessage, deleteMessage };

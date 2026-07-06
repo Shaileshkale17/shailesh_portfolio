@@ -1,4 +1,4 @@
-const Project = require("../models/Project");
-const crudFactory = require("./crudFactory");
+import Project from "../models/Project.js";
+import crudFactory from "./crudFactory.js";
 
-module.exports = crudFactory(Project, { sortBy: "-featured order createdAt" });
+export default crudFactory(Project, { sortBy: "-featured order createdAt" });

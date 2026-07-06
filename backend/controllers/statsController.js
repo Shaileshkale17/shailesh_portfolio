@@ -1,4 +1,4 @@
-const Stat = require("../models/Stat");
-const crudFactory = require("./crudFactory");
+import Stat from "../models/Stat.js";
+import crudFactory from "./crudFactory.js";
 
-module.exports = crudFactory(Stat, { sortBy: "order" });
+export default crudFactory(Stat, { sortBy: "order" });
