@@ -2,11 +2,11 @@
   "name": "portfolio-backend",
   "version": "1.0.0",
   "description": "Backend API for Shailesh Kale's MERN portfolio + admin dashboard",
-  "main": "server.js",
+  "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "seed": "node seed.js"
   },
   "dependencies": {
