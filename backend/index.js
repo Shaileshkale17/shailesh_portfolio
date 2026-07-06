@@ -19,14 +19,18 @@ import statsRoutes from "./routes/statsRoutes.js";
 connectDB();
 
 const app = express();
+app.set("trust proxy", 1);
 
-const allowedOrigins = [process.env.CLIENT_ORIGIN, process.env.ADMIN_ORIGIN].filter(Boolean);
+const allowedOrigins = [
+  process.env.CLIENT_ORIGIN,
+  process.env.ADMIN_ORIGIN,
+].filter(Boolean);
 
 app.use(
   cors({
     origin: allowedOrigins.length ? allowedOrigins : "*",
     credentials: true,
-  })
+  }),
 );
 app.use(express.json({ limit: "2mb" }));
 app.use(cookieParser());
@@ -44,7 +48,9 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/api/health", (req, res) => res.json({ status: "ok", uptime: process.uptime() }));
+app.get("/api/health", (req, res) =>
+  res.json({ status: "ok", uptime: process.uptime() }),
+);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
