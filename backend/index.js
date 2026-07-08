@@ -28,10 +28,17 @@ const allowedOrigins = [
 
 app.use(
   cors({
-    origin: allowedOrigins.length ? allowedOrigins : "*",
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error(`CORS blocked for origin: ${origin}`));
+      }
+    },
     credentials: true,
   }),
 );
+
 app.use(express.json({ limit: "2mb" }));
 app.use(cookieParser());
 
