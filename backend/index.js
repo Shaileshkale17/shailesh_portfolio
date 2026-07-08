@@ -39,6 +39,13 @@ app.use(
   }),
 );
 
+process.on("unhandledRejection", (reason) => {
+  console.error("Unhandled Rejection:", reason);
+});
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught Exception:", err);
+});
+
 app.use(express.json({ limit: "2mb" }));
 app.use(cookieParser());
 
