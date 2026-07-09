@@ -1,5 +1,5 @@
-import "dotenv/config";
 import express from "express";
+import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
@@ -16,9 +16,10 @@ import certificationRoutes from "./routes/certificationRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
 import statsRoutes from "./routes/statsRoutes.js";
 
-connectDB();
+dotenv.config();
 
 const app = express();
+
 app.set("trust proxy", 1);
 
 const allowedOrigins = [
@@ -78,6 +79,8 @@ app.use("/api/stats", statsRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
+
+connectDB();
 
 // When deployed on Vercel, the platform imports this file as a serverless handler
 // and calling app.listen() is unnecessary (and harmless to skip).
