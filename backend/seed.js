@@ -27,8 +27,9 @@ const seed = async () => {
     Stat.deleteMany(),
   ]);
 
-  const adminEmail = process.env.SEED_ADMIN_EMAIL || "shailesh@example.com";
-  const adminPassword = process.env.SEED_ADMIN_PASSWORD || "ChangeMe123!";
+  const adminEmail =
+    process.env.SEED_ADMIN_EMAIL || "shaileshkale87730@gmail.com";
+  const adminPassword = process.env.SEED_ADMIN_PASSWORD || "shaileshkale_.17";
 
   const existingAdmin = await User.findOne({ email: adminEmail });
   if (!existingAdmin) {
@@ -38,7 +39,9 @@ const seed = async () => {
       password: adminPassword,
       role: "admin",
     });
-    console.log(`Admin user created -> ${adminEmail} / ${adminPassword} (change this password after first login)`);
+    console.log(
+      `Admin user created -> ${adminEmail} / ${adminPassword} (change this password after first login)`,
+    );
   } else {
     console.log("Admin user already exists, skipping.");
   }
@@ -66,7 +69,12 @@ const seed = async () => {
     { name: "JWT / RBAC", category: "Backend", proficiency: 80, order: 3 },
     { name: "WebSockets", category: "Backend", proficiency: 75, order: 4 },
 
-    { name: "MongoDB", category: "Database & Tools", proficiency: 85, order: 1 },
+    {
+      name: "MongoDB",
+      category: "Database & Tools",
+      proficiency: 85,
+      order: 1,
+    },
     { name: "Redis", category: "Database & Tools", proficiency: 75, order: 2 },
     { name: "Git", category: "Database & Tools", proficiency: 90, order: 3 },
     { name: "Docker", category: "Database & Tools", proficiency: 65, order: 4 },
@@ -115,10 +123,14 @@ const seed = async () => {
       metric: "30% faster load",
       summary:
         "End-to-end event lifecycle management with role-based access, real-time attendee updates, and a caching layer that cut page load significantly.",
-      problem: "Event organizers needed real-time attendee tracking without the page-load penalties of naive polling.",
-      architecture: "React front end, Node/Express API, MongoDB for persistence, Redis for hot-path caching, WebSockets for live attendee updates.",
-      decisions: "Introduced a Redis caching layer in front of the heaviest read endpoints and moved attendee updates from polling to WebSocket push.",
-      learnings: "Cache invalidation strategy mattered more than cache existence; measured before/after load times to validate the 30% improvement.",
+      problem:
+        "Event organizers needed real-time attendee tracking without the page-load penalties of naive polling.",
+      architecture:
+        "React front end, Node/Express API, MongoDB for persistence, Redis for hot-path caching, WebSockets for live attendee updates.",
+      decisions:
+        "Introduced a Redis caching layer in front of the heaviest read endpoints and moved attendee updates from polling to WebSocket push.",
+      learnings:
+        "Cache invalidation strategy mattered more than cache existence; measured before/after load times to validate the 30% improvement.",
       tags: ["React", "Node.js", "Redis", "WebSockets"],
       category: "Performance",
       featured: true,
@@ -130,10 +142,14 @@ const seed = async () => {
       metric: "40+ bugs closed",
       summary:
         "Human resource management system covering attendance, payroll, and access control, hardened through a dedicated bug-closure sprint.",
-      problem: "The existing HRMS had accumulated reliability issues across RBAC edge cases and payroll calculation paths.",
-      architecture: "React + Redux Toolkit front end, Node/Express + MongoDB back end, JWT-based auth with role-based access control.",
-      decisions: "Ran a focused sprint to triage and close 40+ critical bugs, prioritized by user impact and data-integrity risk.",
-      learnings: "Systematic bug triage (severity x frequency) closed more real risk per sprint than chasing the loudest reports first.",
+      problem:
+        "The existing HRMS had accumulated reliability issues across RBAC edge cases and payroll calculation paths.",
+      architecture:
+        "React + Redux Toolkit front end, Node/Express + MongoDB back end, JWT-based auth with role-based access control.",
+      decisions:
+        "Ran a focused sprint to triage and close 40+ critical bugs, prioritized by user impact and data-integrity risk.",
+      learnings:
+        "Systematic bug triage (severity x frequency) closed more real risk per sprint than chasing the loudest reports first.",
       tags: ["React", "MongoDB", "JWT", "RBAC"],
       category: "Full-stack",
       featured: true,
@@ -144,7 +160,8 @@ const seed = async () => {
   await Achievement.insertMany([
     {
       title: "Fastest intern-to-FTE conversion",
-      description: "Converted from intern to full-time within four months at AeroGenix.",
+      description:
+        "Converted from intern to full-time within four months at AeroGenix.",
       order: 1,
     },
     {
