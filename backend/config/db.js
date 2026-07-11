@@ -1,13 +1,18 @@
 import mongoose, { connect } from "mongoose";
 import dotenv from "dotenv";
-dotenv.config();
+
 const connectDB = async () => {
   try {
-    const connectURL = await connect(process.env.MONGO_URI);
-    console.log("Connection Host Name :- ", connectURL.connection.host);
-  } catch (error) {
-    console.log(error);
-    process.exit(1);
+    console.log("Mongo URI exists:", !!process.env.MONGO_URI);
+
+    const conn = await mongoose.connect(process.env.MONGO_URI, {
+      serverSelectionTimeoutMS: 30000,
+    });
+
+    console.log("MongoDB Connected:", conn.connection.host);
+  } catch (err) {
+    console.error("MongoDB Error:", err);
+    throw err;
   }
 };
 
