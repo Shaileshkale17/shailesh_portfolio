@@ -11,7 +11,8 @@ const Contact = () => {
 
   useEffect(() => revealSection(rootRef.current), []);
 
-  const handleChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  const handleChange = (e) =>
+    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,16 +27,23 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" ref={rootRef} className="bg-surface py-[var(--space-section)]">
+    <section
+      id="contact"
+      ref={rootRef}
+      className="bg-surface py-[var(--space-section)]"
+    >
       <div className="container">
         <SectionHeading
           eyebrow="06 — Contact"
           title="Let's build something measurable."
           subtitle="Open to select frontend-leaning full-stack roles. Typical response time is 24-48 hours."
         />
-        <form onSubmit={handleSubmit} className="reveal max-w-xl space-y-5">
+        <form onSubmit={handleSubmit} className="reveal w-full space-y-5">
           <div>
-            <label htmlFor="name" className="mb-1.5 block text-sm text-text-secondary">
+            <label
+              htmlFor="name"
+              className="mb-1.5 block text-sm text-text-secondary"
+            >
               Name
             </label>
             <input
@@ -49,7 +57,10 @@ const Contact = () => {
             />
           </div>
           <div>
-            <label htmlFor="email" className="mb-1.5 block text-sm text-text-secondary">
+            <label
+              htmlFor="email"
+              className="mb-1.5 block text-sm text-text-secondary"
+            >
               Email
             </label>
             <input
@@ -64,7 +75,10 @@ const Contact = () => {
             />
           </div>
           <div>
-            <label htmlFor="message" className="mb-1.5 block text-sm text-text-secondary">
+            <label
+              htmlFor="message"
+              className="mb-1.5 block text-sm text-text-secondary"
+            >
               Message
             </label>
             <textarea
@@ -78,11 +92,23 @@ const Contact = () => {
               className="w-full rounded-lg border border-border bg-surface-raised px-4 py-3 text-sm outline-none focus:border-primary focus:shadow-glow"
             />
           </div>
-          <Button type="submit" variant="primary" disabled={status === "sending"}>
+          <Button
+            type="submit"
+            variant="primary"
+            disabled={status === "sending"}
+          >
             {status === "sending" ? "Sending..." : "Send message"}
           </Button>
-          {status === "sent" && <p className="text-sm text-success">Thanks — typical response time is 24-48 hours.</p>}
-          {status === "error" && <p className="text-sm text-error">Something went wrong. Please try again.</p>}
+          {status === "sent" && (
+            <p className="text-sm text-success">
+              Thanks — typical response time is 24-48 hours.
+            </p>
+          )}
+          {status === "error" && (
+            <p className="text-sm text-error">
+              Something went wrong. Please try again.
+            </p>
+          )}
         </form>
       </div>
     </section>
