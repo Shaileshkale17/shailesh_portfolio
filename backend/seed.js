@@ -2,16 +2,16 @@
 // Run with: npm run seed
 import "dotenv/config";
 import mongoose from "mongoose";
-import connectDB from "./config/db.js";
+import connectDB from "./src/config/db.js";
 
-import User from "./models/User.js";
-import Project from "./models/Project.js";
-import Experience from "./models/Experience.js";
-import Skill from "./models/Skill.js";
-import Testimonial from "./models/Testimonial.js";
-import Achievement from "./models/Achievement.js";
-import Certification from "./models/Certification.js";
-import Stat from "./models/Stat.js";
+import User from "./src/models/User.js";
+import Project from "./src/models/Project.js";
+import Experience from "./src/models/Experience.js";
+import Skill from "./src/models/Skill.js";
+import Testimonial from "./src/models/Testimonial.js";
+import Achievement from "./src/models/Achievement.js";
+import Certification from "./src/models/Certification.js";
+import Stat from "./src/models/Stat.js";
 
 const seed = async () => {
   await connectDB();
