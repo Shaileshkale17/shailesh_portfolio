@@ -14,6 +14,11 @@ import achievementRoutes from "./routes/achievementRoutes.js";
 import certificationRoutes from "./routes/certificationRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
 import statsRoutes from "./routes/statsRoutes.js";
+import analyticsRoutes from "./routes/analyticsRoutes.js";
+import linkedProjectRoutes from "./routes/linkedProjectRoutes.js";
+import notificationRoutes from "./routes/notificationRoutes.js";
+import integrationRoutes from "./routes/integrationRoutes.js";
+import dashboardRoutes from "./routes/dashboardRoutes.js";
 
 /**
  * Express application setup: middleware, routes, and error handling.
@@ -77,6 +82,14 @@ app.use("/api/achievements", achievementRoutes);
 app.use("/api/certifications", certificationRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/stats", statsRoutes);
+
+// Admin Dashboard: analytics/visitor tracking, project integrations, GitHub/LeetCode
+// integrations, notifications, and the aggregated overview summary.
+app.use("/api/analytics", analyticsRoutes);
+app.use("/api/linked-projects", linkedProjectRoutes);
+app.use("/api/notifications", notificationRoutes);
+app.use("/api/integrations", integrationRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 // Must be registered last: notFound catches unmatched routes, errorHandler
 // catches everything (including what notFound just threw).

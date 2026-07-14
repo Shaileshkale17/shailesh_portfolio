@@ -1,17 +1,18 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import api from "../lib/api";
+import { getStored, setStored, clearStored } from "../lib/storage";
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
-    const raw = localStorage.getItem("admin-user");
+    const raw = getStored("admin-user");
     return raw ? JSON.parse(raw) : null;
   });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("admin-token");
+    const token = getStored("admin-token");
     if (!token) {
       setLoading(false);
       return;
@@ -20,28 +21,35 @@ export const AuthProvider = ({ children }) => {
       .get("/auth/me")
       .then((res) => setUser(res.data))
       .catch(() => {
-        localStorage.removeItem("admin-token");
-        localStorage.removeItem("admin-user");
+        clearStored("admin-token");
+        clearStored("admin-user");
         setUser(null);
       })
       .finally(() => setLoading(false));
   }, []);
 
-  const login = async (email, password) => {
+  // `remember` controls whether the session survives a browser restart
+  // (localStorage) or ends when the tab closes (sessionStorage) — the
+  // login page's "Remember me" checkbox.
+  const login = async (email, password, remember = true) => {
     const { data } = await api.post("/auth/login", { email, password });
-    localStorage.setItem("admin-token", data.token);
-    localStorage.setItem("admin-user", JSON.stringify(data));
+    setStored("admin-token", data.data.token, remember);
+    setStored("admin-user", JSON.stringify(data.data), remember);
     setUser(data);
     return data;
   };
 
   const logout = () => {
-    localStorage.removeItem("admin-token");
-    localStorage.removeItem("admin-user");
+    clearStored("admin-token");
+    clearStored("admin-user");
     setUser(null);
   };
 
-  return <AuthContext.Provider value={{ user, loading, login, logout }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ user, loading, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => {

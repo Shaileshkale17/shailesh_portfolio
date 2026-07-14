@@ -1,6 +1,7 @@
 import asyncHandler from "../utils/asyncHandler.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import { validateRequiredFields } from "../utils/validators.js";
+import { toCsv } from "../utils/toCsv.js";
 import messageService from "../services/messageService.js";
 
 /**
@@ -16,13 +17,29 @@ export const createMessage = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc    List all messages (admin inbox)
- * @route   GET /api/messages
+ * @desc    List messages (admin inbox), optionally filtered
+ * @route   GET /api/messages?search=&read=true|false
  * @access  Private (admin/editor)
  */
 export const getMessages = asyncHandler(async (req, res) => {
-  const docs = await messageService.getMessages();
+  const { search, read } = req.query;
+  const docs = await messageService.getMessages({ search, read });
   ApiResponse.success(res, 200, "Messages fetched successfully", docs);
+});
+
+/**
+ * @desc    Export messages (respecting the same search/read filters) as CSV
+ * @route   GET /api/messages/export?search=&read=true|false
+ * @access  Private (admin/editor)
+ */
+export const exportMessages = asyncHandler(async (req, res) => {
+  const { search, read } = req.query;
+  const docs = await messageService.getMessages({ search, read });
+  const csv = toCsv(docs, ["name", "email", "message", "read", "createdAt"]);
+
+  res.setHeader("Content-Type", "text/csv");
+  res.setHeader("Content-Disposition", `attachment; filename="messages-${Date.now()}.csv"`);
+  res.status(200).send(csv);
 });
 
 /**

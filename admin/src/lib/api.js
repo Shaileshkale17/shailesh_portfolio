@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getStored, clearStored } from "./storage";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
@@ -6,7 +7,7 @@ const api = axios.create({
 
 // Attach the stored JWT to every request once the user is logged in.
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("admin-token");
+  const token = getStored("admin-token");
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
@@ -16,8 +17,8 @@ api.interceptors.response.use(
   (res) => res,
   (err) => {
     if (err.response?.status === 401) {
-      localStorage.removeItem("admin-token");
-      localStorage.removeItem("admin-user");
+      clearStored("admin-token");
+      clearStored("admin-user");
       window.location.href = "/login";
     }
     return Promise.reject(err);

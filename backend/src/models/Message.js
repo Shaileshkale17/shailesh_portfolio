@@ -10,6 +10,14 @@ const messageSchema = new mongoose.Schema(
     message: { type: String, required: true },
     // Lets the admin inbox filter unread messages quickly.
     read: { type: Boolean, default: false },
+
+    // Tracks whether the two outgoing emails (admin alert + visitor auto-reply)
+    // triggered on creation actually went out — see services/mailService.js.
+    // Both default false and are never allowed to block message creation itself.
+    emailStatus: {
+      adminNotified: { type: Boolean, default: false },
+      autoReplySent: { type: Boolean, default: false },
+    },
   },
   { timestamps: true }
 );

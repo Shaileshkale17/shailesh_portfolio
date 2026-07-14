@@ -61,3 +61,21 @@ export const authorize = (...roles) => {
     next();
   };
 };
+
+/**
+ * Allows a request through if EITHER:
+ *   1. it carries a valid `x-cron-secret` header matching `CRON_SECRET`
+ *      (for an external scheduler like Vercel Cron hitting the endpoint
+ *      directly, with no admin logged in), OR
+ *   2. it's an authenticated admin (falls through to `protect` + `authorize("admin")`).
+ *
+ * Used by `POST /api/integrations/sync` so it can be triggered both
+ * manually from the dashboard and by a serverless cron scheduler.
+ */
+export const allowAdminOrCronSecret = (req, res, next) => {
+  const providedSecret = req.headers["x-cron-secret"];
+  if (providedSecret && process.env.CRON_SECRET && providedSecret === process.env.CRON_SECRET) {
+    return next();
+  }
+  return protect(req, res, () => authorize("admin")(req, res, next));
+};

@@ -4,6 +4,9 @@
   "description": "Backend API for Shailesh Kale's MERN portfolio + admin dashboard",
   "main": "index.js",
   "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
@@ -18,6 +21,8 @@
     "express-rate-limit": "^7.2.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.0",
+    "node-cron": "^3.0.3",
+    "nodemailer": "^6.9.14",
     "vercel": "^54.20.1"
   },
   "devDependencies": {
